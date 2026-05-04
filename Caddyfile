@@ -1,0 +1,22 @@
+# Caddy reverse proxy for VectorOWL
+# Place your built UI files in ./www/ for static serving
+
+:80 {
+    # API proxy
+    handle_path /api/* {
+        reverse_proxy vectorowl:8080
+    }
+
+    # Static UI files
+    root * /var/www/vectorowl
+    file_server
+    try_files {path} {path}/ /index.html
+
+    encode gzip
+
+    header {
+        X-Frame-Options "SAMEORIGIN"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+}
