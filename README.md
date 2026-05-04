@@ -86,10 +86,12 @@ cp .env.example .env
 # Edit .env and set VECTOROWL_LICENSE_KEY
 
 # 3. Start
-docker compose up -d
+docker-compose up -d
 ```
 
 Open **http://localhost:8080**.
+
+> **Note:** If your system has the newer Docker Compose plugin, use `docker compose up -d` (space, no hyphen). Both work the same.
 
 ---
 
@@ -104,9 +106,11 @@ Open **http://localhost:8080**.
 ## Upgrade
 
 ```bash
-docker compose pull
-docker compose up -d
+docker-compose pull
+docker-compose up -d
 ```
+
+> **Note:** Use `docker compose` (space) if you have the Docker Compose plugin instead of the standalone binary.
 
 ---
 
@@ -115,6 +119,26 @@ docker compose up -d
 ```bash
 docker logs -f vectorowl
 docker logs -f vectorowl-caddy
+```
+
+---
+
+## Troubleshooting
+
+### `docker: unknown command: docker compose`
+
+Your installation uses the standalone `docker-compose` binary (older style). Simply replace `docker compose` with `docker-compose` (hyphen) in every command:
+
+```bash
+docker-compose up -d
+docker-compose pull
+docker-compose logs -f
+```
+
+If you'd rather use the modern plugin syntax, install it:
+
+```bash
+sudo apt-get install docker-compose-plugin   # Debian/Ubuntu
 ```
 
 ---
