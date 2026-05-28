@@ -3530,6 +3530,126 @@
       "source": "sh_regulator",
       "target": "uc_fault_response",
       "type": "interested_in"
+    },
+    {
+      "source": "pin_in_accel_torque",
+      "target": "sig_accel_pedal",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_brake_torque",
+      "target": "sig_brake_pressure",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_soc_torque",
+      "target": "sig_soc",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_pack_voltage",
+      "target": "sig_pack_voltage",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_pack_current",
+      "target": "sig_pack_current",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_cell_temp_soc",
+      "target": "sig_cell_temp_max",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_cell_volt_max_bal",
+      "target": "sig_cell_volt_max",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_cell_volt_min_bal",
+      "target": "sig_cell_volt_min",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_cell_temp_tms",
+      "target": "sig_cell_temp_max",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_motor_temp_tms",
+      "target": "sig_motor_temp",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_charge_current",
+      "target": "sig_charge_current",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_soc_charge",
+      "target": "sig_soc",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_cell_temp_charge",
+      "target": "sig_cell_temp_max",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_interlock",
+      "target": "sig_hv_interlock",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_bms_fault",
+      "target": "sig_bms_fault",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_mcu_fault",
+      "target": "sig_mcu_fault",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_brake_regen",
+      "target": "sig_brake_pressure",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_soc_regen",
+      "target": "sig_soc",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_soc_range",
+      "target": "sig_soc",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_speed_range",
+      "target": "sig_vehicle_speed",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_soc_hmi",
+      "target": "sig_soc",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_speed_hmi",
+      "target": "sig_vehicle_speed",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_fault_hmi",
+      "target": "sig_bms_fault",
+      "type": "flow"
+    },
+    {
+      "source": "pin_in_range_hmi",
+      "target": "sig_range_estimate",
+      "type": "flow"
     }
   ]
 }
