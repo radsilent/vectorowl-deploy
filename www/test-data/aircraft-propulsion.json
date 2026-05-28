@@ -1209,6 +1209,276 @@
       "source": "hpt",
       "target": "port_hpt_cool_in",
       "type": "contains"
+    },
+    {
+      "source": "func_thrust",
+      "target": "sig_n1",
+      "type": "consumes"
+    },
+    {
+      "source": "func_thrust",
+      "target": "sig_n2",
+      "type": "consumes"
+    },
+    {
+      "source": "func_thrust",
+      "target": "sig_p0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_thrust",
+      "target": "sig_t0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_fuel",
+      "target": "sig_n1",
+      "type": "consumes"
+    },
+    {
+      "source": "func_fuel",
+      "target": "sig_n2",
+      "type": "consumes"
+    },
+    {
+      "source": "func_fuel",
+      "target": "sig_egt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_fuel",
+      "target": "sig_ff",
+      "type": "produces"
+    },
+    {
+      "source": "func_control",
+      "target": "sig_n1",
+      "type": "consumes"
+    },
+    {
+      "source": "func_control",
+      "target": "sig_n2",
+      "type": "consumes"
+    },
+    {
+      "source": "func_control",
+      "target": "sig_egt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_control",
+      "target": "sig_ff",
+      "type": "consumes"
+    },
+    {
+      "source": "func_control",
+      "target": "sig_vib",
+      "type": "consumes"
+    },
+    {
+      "source": "func_control",
+      "target": "sig_oilp",
+      "type": "consumes"
+    },
+    {
+      "source": "func_cool",
+      "target": "sig_egt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_cool",
+      "target": "sig_oilt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_lube",
+      "target": "sig_oilp",
+      "type": "produces"
+    },
+    {
+      "source": "func_lube",
+      "target": "sig_oilt",
+      "type": "produces"
+    },
+    {
+      "source": "func_bleed",
+      "target": "sig_p0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_start",
+      "target": "sig_n2",
+      "type": "consumes"
+    },
+    {
+      "source": "func_start",
+      "target": "sig_n1",
+      "type": "produces"
+    },
+    {
+      "source": "func_accel_air",
+      "target": "sig_p0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_accel_air",
+      "target": "sig_t0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_compress_lp",
+      "target": "sig_n1",
+      "type": "consumes"
+    },
+    {
+      "source": "func_compress_lp",
+      "target": "sig_p0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_compress_hp",
+      "target": "sig_n2",
+      "type": "consumes"
+    },
+    {
+      "source": "func_compress_hp",
+      "target": "sig_p0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_ignite_fuel",
+      "target": "sig_ff",
+      "type": "consumes"
+    },
+    {
+      "source": "func_ignite_fuel",
+      "target": "sig_p0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_ignite_fuel",
+      "target": "sig_t0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_ignite_fuel",
+      "target": "sig_egt",
+      "type": "produces"
+    },
+    {
+      "source": "func_contain_flame",
+      "target": "sig_egt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_extract_hp_work",
+      "target": "sig_egt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_extract_hp_work",
+      "target": "sig_n2",
+      "type": "produces"
+    },
+    {
+      "source": "func_extract_lp_work",
+      "target": "sig_egt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_extract_lp_work",
+      "target": "sig_n2",
+      "type": "consumes"
+    },
+    {
+      "source": "func_extract_lp_work",
+      "target": "sig_n1",
+      "type": "produces"
+    },
+    {
+      "source": "func_accelerate_exhaust",
+      "target": "sig_egt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_accelerate_exhaust",
+      "target": "sig_p0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_schedule_fuel",
+      "target": "sig_n1",
+      "type": "consumes"
+    },
+    {
+      "source": "func_schedule_fuel",
+      "target": "sig_n2",
+      "type": "consumes"
+    },
+    {
+      "source": "func_schedule_fuel",
+      "target": "sig_egt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_schedule_fuel",
+      "target": "sig_ff",
+      "type": "produces"
+    },
+    {
+      "source": "func_surge_protect",
+      "target": "sig_n1",
+      "type": "consumes"
+    },
+    {
+      "source": "func_surge_protect",
+      "target": "sig_n2",
+      "type": "consumes"
+    },
+    {
+      "source": "func_surge_protect",
+      "target": "sig_p0",
+      "type": "consumes"
+    },
+    {
+      "source": "func_surge_protect",
+      "target": "sig_vib",
+      "type": "consumes"
+    },
+    {
+      "source": "func_limit_egt",
+      "target": "sig_egt",
+      "type": "consumes"
+    },
+    {
+      "source": "func_limit_egt",
+      "target": "sig_n1",
+      "type": "consumes"
+    },
+    {
+      "source": "func_limit_egt",
+      "target": "sig_n2",
+      "type": "consumes"
+    },
+    {
+      "source": "func_limit_egt",
+      "target": "sig_ff",
+      "type": "produces"
+    },
+    {
+      "source": "func_pressurize_fuel",
+      "target": "sig_ff",
+      "type": "produces"
+    },
+    {
+      "source": "func_scavenge_oil",
+      "target": "sig_oilp",
+      "type": "consumes"
+    },
+    {
+      "source": "func_regulate_temp",
+      "target": "sig_oilt",
+      "type": "consumes"
     }
   ]
 }

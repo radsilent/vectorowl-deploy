@@ -39,7 +39,7 @@
       "attributes": {
         "name": "Normal Driving - SOH Monitoring",
         "description": "During normal highway driving at 70mph, the BMS samples cell voltages every 100ms, temperatures every 500ms, and computes SOH drift every 60s. If SOH drops below 80%, a maintenance alert is queued.",
-        "precondition": "Vehicle powered on, pack temperature 15-35°C, SOC 20-90%",
+        "precondition": "Vehicle powered on, pack temperature 15-35\u00b0C, SOC 20-90%",
         "postcondition": "SOH estimate updated, no alerts if SOH > 80%",
         "steps": "1. Initialize ADC sampling loop | 2. Read 96 cell voltages | 3. Read 24 temperature sensors | 4. Compute impedance spectrum | 5. Update SOH Kalman filter | 6. Check threshold | 7. Log or alert"
       }
@@ -49,10 +49,10 @@
       "kind": "Scenario",
       "attributes": {
         "name": "Fast Charging - Thermal Derating",
-        "description": "Driver initiates 350kW fast charge at 10% SOC. BMS starts at max current, then progressively derates as cell temperatures approach 45°C, balancing charge speed against thermal limits.",
-        "precondition": "Charger connected, CCS protocol active, pack temp < 40°C",
+        "description": "Driver initiates 350kW fast charge at 10% SOC. BMS starts at max current, then progressively derates as cell temperatures approach 45\u00b0C, balancing charge speed against thermal limits.",
+        "precondition": "Charger connected, CCS protocol active, pack temp < 40\u00b0C",
         "postcondition": "Charge complete or thermal limit reached, log maintained",
-        "steps": "1. Negotiate charge profile with charger | 2. Begin 350kW charge | 3. Monitor max cell temp every 1s | 4. At 42°C, reduce current 10% | 5. At 45°C, reduce current 25% | 6. At 50°C, emergency stop | 7. Report session data"
+        "steps": "1. Negotiate charge profile with charger | 2. Begin 350kW charge | 3. Monitor max cell temp every 1s | 4. At 42\u00b0C, reduce current 10% | 5. At 45\u00b0C, reduce current 25% | 6. At 50\u00b0C, emergency stop | 7. Report session data"
       }
     },
     {
@@ -60,10 +60,10 @@
       "kind": "Scenario",
       "attributes": {
         "name": "Thermal Runaway Detection & Response",
-        "description": "Cell 17 vents gas and temperature spikes to 85°C within 3 seconds. BMS detects the anomaly, isolates the module, activates suppression, and notifies occupants via VCU.",
+        "description": "Cell 17 vents gas and temperature spikes to 85\u00b0C within 3 seconds. BMS detects the anomaly, isolates the module, activates suppression, and notifies occupants via VCU.",
         "precondition": "Pack operational, vent detection sensors armed",
         "postcondition": "Affected module isolated, suppression active, occupants notified",
-        "steps": "1. Temp sensor T-17 reads 85°C (threshold: 60°C) | 2. Vent sensor V-17 triggers | 3. BMS flags thermal event in < 100ms | 4. Open contactors for Module 3 | 5. Activate aerosol suppression | 6. Send CAN message to VCU | 7. VCU activates hazard lights + cabin alert | 8. Log incident for forensic analysis"
+        "steps": "1. Temp sensor T-17 reads 85\u00b0C (threshold: 60\u00b0C) | 2. Vent sensor V-17 triggers | 3. BMS flags thermal event in < 100ms | 4. Open contactors for Module 3 | 5. Activate aerosol suppression | 6. Send CAN message to VCU | 7. VCU activates hazard lights + cabin alert | 8. Log incident for forensic analysis"
       }
     },
     {
@@ -72,7 +72,7 @@
       "attributes": {
         "req_id": "REQ-EV-001",
         "name": "Cell Voltage Sampling Rate",
-        "text": "The BMS shall sample each cell voltage at a minimum rate of 10 Hz with 16-bit resolution and ±1mV accuracy.",
+        "text": "The BMS shall sample each cell voltage at a minimum rate of 10 Hz with 16-bit resolution and \u00b11mV accuracy.",
         "category": "performance",
         "priority": "high",
         "verification_method": "test",
@@ -98,7 +98,7 @@
       "attributes": {
         "req_id": "REQ-EV-003",
         "name": "SOC Estimation Accuracy",
-        "text": "The BMS shall estimate State of Charge with an accuracy of ±2% across the operational temperature range of -20°C to +60°C.",
+        "text": "The BMS shall estimate State of Charge with an accuracy of \u00b12% across the operational temperature range of -20\u00b0C to +60\u00b0C.",
         "category": "performance",
         "priority": "high",
         "verification_method": "test",
@@ -111,7 +111,7 @@
       "attributes": {
         "req_id": "REQ-EV-004",
         "name": "Charging Current Derating",
-        "text": "The BMS shall reduce charging current by 10% when any cell temperature exceeds 42°C, and by 25% when any cell exceeds 45°C.",
+        "text": "The BMS shall reduce charging current by 10% when any cell temperature exceeds 42\u00b0C, and by 25% when any cell exceeds 45\u00b0C.",
         "category": "safety",
         "priority": "high",
         "verification_method": "test",
@@ -241,7 +241,7 @@
       "kind": "Scenario",
       "attributes": {
         "name": "Mountain Search - Lawn Mower Pattern",
-        "description": "UAV deployed at 2000m elevation to search 2km² avalanche zone. Flies 100m AGL at 15m/s with 80m track spacing. EO/IR camera captures 4K video at 30fps. ML person-detection runs at 5Hz.",
+        "description": "UAV deployed at 2000m elevation to search 2km\u00b2 avalanche zone. Flies 100m AGL at 15m/s with 80m track spacing. EO/IR camera captures 4K video at 30fps. ML person-detection runs at 5Hz.",
         "precondition": "GPS lock, battery > 60%, weather VMC, GCS link established",
         "postcondition": "Area covered, detections logged, video archived",
         "steps": "1. Receive search area polygon from GCS | 2. Generate lawn-mower waypoints | 3. Climb to 100m AGL | 4. Execute pattern at 15m/s | 5. Run person detection on every 5th frame | 6. On detection, loiter for 10s, capture burst | 7. Stream geo-tagged detection to GCS | 8. Return on completion or battery < 25%"
@@ -277,7 +277,7 @@
       "attributes": {
         "req_id": "REQ-UAV-002",
         "name": "Person Detection Rate",
-        "text": "The onboard person detection model shall achieve a true positive rate of ≥ 95% and false positive rate of ≤ 2% for upright humans at ranges of 50-200m.",
+        "text": "The onboard person detection model shall achieve a true positive rate of \u2265 95% and false positive rate of \u2264 2% for upright humans at ranges of 50-200m.",
         "category": "performance",
         "priority": "high",
         "verification_method": "test",
@@ -405,7 +405,7 @@
         "description": "During routine infusion, a 0.5mL air bubble enters the line. The ultrasonic air-in-line sensor detects it within 50ms and triggers immediate pump stop + high-priority alarm.",
         "precondition": "Infusion active, air sensor calibrated",
         "postcondition": "Pump stopped, alarm active, clinician notified",
-        "steps": "1. Air bubble passes ultrasonic sensor | 2. Sensor detects > 50µL air | 3. Signal crosses threshold in < 50ms | 4. Motor driver receives stop command | 5. Pump halts within 100ms | 6. Red alarm LED flashes | 7. Audible alarm at 85dB | 8. Message displayed: 'AIR IN LINE' | 9. Log event with timestamp"
+        "steps": "1. Air bubble passes ultrasonic sensor | 2. Sensor detects > 50\u00b5L air | 3. Signal crosses threshold in < 50ms | 4. Motor driver receives stop command | 5. Pump halts within 100ms | 6. Red alarm LED flashes | 7. Audible alarm at 85dB | 8. Message displayed: 'AIR IN LINE' | 9. Log event with timestamp"
       }
     },
     {
@@ -414,7 +414,7 @@
       "attributes": {
         "req_id": "REQ-MED-001",
         "name": "Flow Rate Accuracy",
-        "text": "The pump shall deliver fluid within ±5% of the programmed rate across the range of 0.1 mL/hr to 1200 mL/hr.",
+        "text": "The pump shall deliver fluid within \u00b15% of the programmed rate across the range of 0.1 mL/hr to 1200 mL/hr.",
         "category": "performance",
         "priority": "critical",
         "verification_method": "test",
@@ -427,7 +427,7 @@
       "attributes": {
         "req_id": "REQ-MED-002",
         "name": "Air-in-Line Detection Sensitivity",
-        "text": "The pump shall detect air bubbles of 50 µL or greater and stop infusion within 100 milliseconds.",
+        "text": "The pump shall detect air bubbles of 50 \u00b5L or greater and stop infusion within 100 milliseconds.",
         "category": "safety",
         "priority": "critical",
         "verification_method": "test",
@@ -551,7 +551,7 @@
       "attributes": {
         "req_id": "REQ-FAC-001",
         "name": "Navigation Position Accuracy",
-        "text": "The robot shall navigate to within ±10mm of target positions in the warehouse grid.",
+        "text": "The robot shall navigate to within \u00b110mm of target positions in the warehouse grid.",
         "category": "performance",
         "priority": "high",
         "verification_method": "test",
@@ -625,7 +625,7 @@
       "kind": "Component",
       "attributes": {
         "name": "Lidar Sensor Array",
-        "description": "270° 2D Lidar for SLAM and obstacle detection",
+        "description": "270\u00b0 2D Lidar for SLAM and obstacle detection",
         "type": "Sensor"
       }
     },
@@ -637,60 +637,696 @@
         "description": "IEC 61508 SIL-2 rated safety controller",
         "type": "Controller"
       }
+    },
+    {
+      "id": "sig-ev-cell-voltage",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Cell Voltage",
+        "unit": "V",
+        "description": "Individual cell terminal voltage measured by CMU",
+        "rate": "100ms",
+        "range": "2.5\u20134.2"
+      }
+    },
+    {
+      "id": "sig-ev-pack-temp",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Pack Temperature",
+        "unit": "\u00b0C",
+        "description": "Max cell temperature across the module array",
+        "rate": "500ms",
+        "range": "-20\u201360"
+      }
+    },
+    {
+      "id": "sig-ev-pack-current",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Pack Current",
+        "unit": "A",
+        "description": "Total HV bus current (charge negative, discharge positive)",
+        "rate": "10ms",
+        "range": "-500\u2013500"
+      }
+    },
+    {
+      "id": "sig-ev-soc",
+      "kind": "Signal",
+      "attributes": {
+        "name": "State of Charge",
+        "unit": "%",
+        "description": "Estimated SOC from extended Kalman filter",
+        "rate": "1s",
+        "range": "0\u2013100"
+      }
+    },
+    {
+      "id": "sig-ev-soh",
+      "kind": "Signal",
+      "attributes": {
+        "name": "State of Health",
+        "unit": "%",
+        "description": "Estimated capacity fade relative to nominal",
+        "rate": "60s",
+        "range": "0\u2013100"
+      }
+    },
+    {
+      "id": "sig-ev-cooling-cmd",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Cooling Command",
+        "unit": "%",
+        "description": "Commanded pump duty cycle from thermal management",
+        "rate": "500ms"
+      }
+    },
+    {
+      "id": "sig-ev-contactor",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Contactor State",
+        "unit": "bool",
+        "description": "HV bus contactor open/closed status",
+        "rate": "10ms"
+      }
+    },
+    {
+      "id": "sig-uav-gps-pos",
+      "kind": "Signal",
+      "attributes": {
+        "name": "GPS Position",
+        "unit": "deg/m",
+        "description": "Fused GPS/INS position (lat, lon, alt)",
+        "rate": "10Hz"
+      }
+    },
+    {
+      "id": "sig-uav-waypoints",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Waypoint List",
+        "description": "Ordered list of GPS waypoints for current mission",
+        "rate": "on-change"
+      }
+    },
+    {
+      "id": "sig-uav-camera-frame",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Camera Frame",
+        "unit": "px",
+        "description": "4K EO/IR video frame from gimbal payload",
+        "rate": "30Hz"
+      }
+    },
+    {
+      "id": "sig-uav-detections",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Person Detections",
+        "description": "Bounding boxes and confidence scores from ML inference",
+        "rate": "5Hz"
+      }
+    },
+    {
+      "id": "sig-uav-altitude-cmd",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Altitude Command",
+        "unit": "m AGL",
+        "description": "Target altitude commanded by terrain-following function",
+        "rate": "10Hz"
+      }
+    },
+    {
+      "id": "sig-uav-terrain-hgt",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Terrain Height",
+        "unit": "m",
+        "description": "Terrain elevation from database or radar altimeter",
+        "rate": "10Hz"
+      }
+    },
+    {
+      "id": "sig-med-flow-cmd",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Flow Rate Command",
+        "unit": "mL/hr",
+        "description": "Clinician-programmed infusion rate",
+        "rate": "on-change",
+        "range": "0.1\u20131200"
+      }
+    },
+    {
+      "id": "sig-med-motor-speed",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Motor Speed",
+        "unit": "RPM",
+        "description": "Peristaltic motor shaft speed with encoder feedback",
+        "rate": "10ms"
+      }
+    },
+    {
+      "id": "sig-med-upstream-p",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Upstream Pressure",
+        "unit": "mmHg",
+        "description": "Line pressure upstream of pump head for occlusion detection",
+        "rate": "100ms"
+      }
+    },
+    {
+      "id": "sig-med-air-detect",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Air-in-Line Detection",
+        "unit": "bool",
+        "description": "Ultrasonic bubble detection flag (> 50 \u00b5L threshold)",
+        "rate": "50ms"
+      }
+    },
+    {
+      "id": "sig-med-drug-params",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Drug Parameters",
+        "description": "Programmed drug name, concentration, and dose rate from UI",
+        "rate": "on-change"
+      }
+    },
+    {
+      "id": "sig-med-verify-ok",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Verification Status",
+        "unit": "bool",
+        "description": "Drug library cross-check result: pass/fail",
+        "rate": "on-change"
+      }
+    },
+    {
+      "id": "sig-fac-target-pos",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Target Position",
+        "unit": "mm",
+        "description": "WMS-assigned pick or drop location in warehouse grid",
+        "rate": "on-change"
+      }
+    },
+    {
+      "id": "sig-fac-fleet-state",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Fleet State",
+        "description": "Positions and statuses of all AMRs from fleet manager",
+        "rate": "1Hz"
+      }
+    },
+    {
+      "id": "sig-fac-path-plan",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Path Plan",
+        "description": "Ordered waypoint sequence computed by path planner",
+        "rate": "on-change"
+      }
+    },
+    {
+      "id": "sig-fac-lidar-scan",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Lidar Scan",
+        "unit": "m",
+        "description": "270\u00b0 2D point cloud from Lidar sensor array at 10 Hz",
+        "rate": "10Hz"
+      }
+    },
+    {
+      "id": "sig-fac-obstacle-map",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Obstacle Map",
+        "description": "Classified obstacle grid (human / forklift / object) from sensor fusion",
+        "rate": "10Hz"
+      }
+    },
+    {
+      "id": "sig-fac-fork-cmd",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Fork Command",
+        "description": "Lift/lower/extend command to fork mechanism actuator",
+        "rate": "on-change"
+      }
+    },
+    {
+      "id": "sig-fac-fork-status",
+      "kind": "Signal",
+      "attributes": {
+        "name": "Fork Status",
+        "description": "Fork position feedback: idle / raising / lowering / extended",
+        "rate": "100ms"
+      }
     }
   ],
   "edges": [
-    { "source": "sc-ev-001", "target": "uc-ev-001", "type": "contains" },
-    { "source": "sc-ev-002", "target": "uc-ev-003", "type": "contains" },
-    { "source": "sc-ev-003", "target": "uc-ev-002", "type": "contains" },
-    { "source": "req-ev-001", "target": "uc-ev-001", "type": "satisfy" },
-    { "source": "req-ev-002", "target": "uc-ev-002", "type": "satisfy" },
-    { "source": "req-ev-003", "target": "uc-ev-001", "type": "satisfy" },
-    { "source": "req-ev-004", "target": "uc-ev-003", "type": "satisfy" },
-    { "source": "req-ev-005", "target": "uc-ev-002", "type": "satisfy" },
-    { "source": "func-ev-001", "target": "req-ev-001", "type": "satisfy" },
-    { "source": "func-ev-002", "target": "req-ev-003", "type": "satisfy" },
-    { "source": "func-ev-003", "target": "req-ev-004", "type": "satisfy" },
-    { "source": "func-ev-004", "target": "req-ev-005", "type": "satisfy" },
-    { "source": "func-ev-003", "target": "req-ev-002", "type": "satisfy" },
-    { "source": "comp-ev-001", "target": "func-ev-002", "type": "allocate" },
-    { "source": "comp-ev-002", "target": "func-ev-001", "type": "allocate" },
-    { "source": "comp-ev-003", "target": "func-ev-004", "type": "allocate" },
-    { "source": "comp-ev-004", "target": "func-ev-003", "type": "allocate" },
-    { "source": "sc-uav-001", "target": "uc-uav-001", "type": "contains" },
-    { "source": "sc-uav-002", "target": "uc-uav-003", "type": "contains" },
-    { "source": "req-uav-001", "target": "uc-uav-001", "type": "satisfy" },
-    { "source": "req-uav-002", "target": "uc-uav-002", "type": "satisfy" },
-    { "source": "req-uav-003", "target": "uc-uav-003", "type": "satisfy" },
-    { "source": "req-uav-004", "target": "uc-uav-001", "type": "satisfy" },
-    { "source": "func-uav-001", "target": "req-uav-001", "type": "satisfy" },
-    { "source": "func-uav-002", "target": "req-uav-002", "type": "satisfy" },
-    { "source": "func-uav-003", "target": "req-uav-004", "type": "satisfy" },
-    { "source": "func-uav-001", "target": "req-uav-003", "type": "satisfy" },
-    { "source": "comp-uav-001", "target": "func-uav-001", "type": "allocate" },
-    { "source": "comp-uav-002", "target": "func-uav-002", "type": "allocate" },
-    { "source": "comp-uav-003", "target": "func-uav-002", "type": "allocate" },
-    { "source": "sc-med-001", "target": "uc-med-001", "type": "contains" },
-    { "source": "sc-med-002", "target": "uc-med-002", "type": "contains" },
-    { "source": "req-med-001", "target": "uc-med-001", "type": "satisfy" },
-    { "source": "req-med-002", "target": "uc-med-002", "type": "satisfy" },
-    { "source": "req-med-003", "target": "uc-med-001", "type": "satisfy" },
-    { "source": "func-med-001", "target": "req-med-001", "type": "satisfy" },
-    { "source": "func-med-002", "target": "req-med-002", "type": "satisfy" },
-    { "source": "func-med-003", "target": "req-med-003", "type": "satisfy" },
-    { "source": "comp-med-001", "target": "func-med-001", "type": "allocate" },
-    { "source": "comp-med-002", "target": "func-med-002", "type": "allocate" },
-    { "source": "comp-med-003", "target": "func-med-003", "type": "allocate" },
-    { "source": "sc-fac-001", "target": "uc-fac-001", "type": "contains" },
-    { "source": "sc-fac-002", "target": "uc-fac-002", "type": "contains" },
-    { "source": "req-fac-001", "target": "uc-fac-001", "type": "satisfy" },
-    { "source": "req-fac-002", "target": "uc-fac-002", "type": "satisfy" },
-    { "source": "req-fac-003", "target": "uc-fac-001", "type": "satisfy" },
-    { "source": "func-fac-001", "target": "req-fac-001", "type": "satisfy" },
-    { "source": "func-fac-002", "target": "req-fac-002", "type": "satisfy" },
-    { "source": "func-fac-003", "target": "req-fac-003", "type": "satisfy" },
-    { "source": "comp-fac-001", "target": "func-fac-003", "type": "allocate" },
-    { "source": "comp-fac-002", "target": "func-fac-002", "type": "allocate" },
-    { "source": "comp-fac-003", "target": "func-fac-002", "type": "allocate" }
+    {
+      "source": "sc-ev-001",
+      "target": "uc-ev-001",
+      "type": "contains"
+    },
+    {
+      "source": "sc-ev-002",
+      "target": "uc-ev-003",
+      "type": "contains"
+    },
+    {
+      "source": "sc-ev-003",
+      "target": "uc-ev-002",
+      "type": "contains"
+    },
+    {
+      "source": "req-ev-001",
+      "target": "uc-ev-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-ev-002",
+      "target": "uc-ev-002",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-ev-003",
+      "target": "uc-ev-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-ev-004",
+      "target": "uc-ev-003",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-ev-005",
+      "target": "uc-ev-002",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-ev-001",
+      "target": "req-ev-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-ev-002",
+      "target": "req-ev-003",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-ev-003",
+      "target": "req-ev-004",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-ev-004",
+      "target": "req-ev-005",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-ev-003",
+      "target": "req-ev-002",
+      "type": "satisfy"
+    },
+    {
+      "source": "comp-ev-001",
+      "target": "func-ev-002",
+      "type": "allocate"
+    },
+    {
+      "source": "comp-ev-002",
+      "target": "func-ev-001",
+      "type": "allocate"
+    },
+    {
+      "source": "comp-ev-003",
+      "target": "func-ev-004",
+      "type": "allocate"
+    },
+    {
+      "source": "comp-ev-004",
+      "target": "func-ev-003",
+      "type": "allocate"
+    },
+    {
+      "source": "sc-uav-001",
+      "target": "uc-uav-001",
+      "type": "contains"
+    },
+    {
+      "source": "sc-uav-002",
+      "target": "uc-uav-003",
+      "type": "contains"
+    },
+    {
+      "source": "req-uav-001",
+      "target": "uc-uav-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-uav-002",
+      "target": "uc-uav-002",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-uav-003",
+      "target": "uc-uav-003",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-uav-004",
+      "target": "uc-uav-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-uav-001",
+      "target": "req-uav-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-uav-002",
+      "target": "req-uav-002",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-uav-003",
+      "target": "req-uav-004",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-uav-001",
+      "target": "req-uav-003",
+      "type": "satisfy"
+    },
+    {
+      "source": "comp-uav-001",
+      "target": "func-uav-001",
+      "type": "allocate"
+    },
+    {
+      "source": "comp-uav-002",
+      "target": "func-uav-002",
+      "type": "allocate"
+    },
+    {
+      "source": "comp-uav-003",
+      "target": "func-uav-002",
+      "type": "allocate"
+    },
+    {
+      "source": "sc-med-001",
+      "target": "uc-med-001",
+      "type": "contains"
+    },
+    {
+      "source": "sc-med-002",
+      "target": "uc-med-002",
+      "type": "contains"
+    },
+    {
+      "source": "req-med-001",
+      "target": "uc-med-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-med-002",
+      "target": "uc-med-002",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-med-003",
+      "target": "uc-med-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-med-001",
+      "target": "req-med-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-med-002",
+      "target": "req-med-002",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-med-003",
+      "target": "req-med-003",
+      "type": "satisfy"
+    },
+    {
+      "source": "comp-med-001",
+      "target": "func-med-001",
+      "type": "allocate"
+    },
+    {
+      "source": "comp-med-002",
+      "target": "func-med-002",
+      "type": "allocate"
+    },
+    {
+      "source": "comp-med-003",
+      "target": "func-med-003",
+      "type": "allocate"
+    },
+    {
+      "source": "sc-fac-001",
+      "target": "uc-fac-001",
+      "type": "contains"
+    },
+    {
+      "source": "sc-fac-002",
+      "target": "uc-fac-002",
+      "type": "contains"
+    },
+    {
+      "source": "req-fac-001",
+      "target": "uc-fac-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-fac-002",
+      "target": "uc-fac-002",
+      "type": "satisfy"
+    },
+    {
+      "source": "req-fac-003",
+      "target": "uc-fac-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-fac-001",
+      "target": "req-fac-001",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-fac-002",
+      "target": "req-fac-002",
+      "type": "satisfy"
+    },
+    {
+      "source": "func-fac-003",
+      "target": "req-fac-003",
+      "type": "satisfy"
+    },
+    {
+      "source": "comp-fac-001",
+      "target": "func-fac-003",
+      "type": "allocate"
+    },
+    {
+      "source": "comp-fac-002",
+      "target": "func-fac-002",
+      "type": "allocate"
+    },
+    {
+      "source": "comp-fac-003",
+      "target": "func-fac-002",
+      "type": "allocate"
+    },
+    {
+      "source": "func-ev-001",
+      "target": "sig-ev-cell-voltage",
+      "type": "produces"
+    },
+    {
+      "source": "func-ev-001",
+      "target": "sig-ev-pack-temp",
+      "type": "produces"
+    },
+    {
+      "source": "func-ev-001",
+      "target": "sig-ev-pack-current",
+      "type": "consumes"
+    },
+    {
+      "source": "func-ev-002",
+      "target": "sig-ev-cell-voltage",
+      "type": "consumes"
+    },
+    {
+      "source": "func-ev-002",
+      "target": "sig-ev-pack-temp",
+      "type": "consumes"
+    },
+    {
+      "source": "func-ev-002",
+      "target": "sig-ev-pack-current",
+      "type": "consumes"
+    },
+    {
+      "source": "func-ev-002",
+      "target": "sig-ev-soc",
+      "type": "produces"
+    },
+    {
+      "source": "func-ev-002",
+      "target": "sig-ev-soh",
+      "type": "produces"
+    },
+    {
+      "source": "func-ev-003",
+      "target": "sig-ev-pack-temp",
+      "type": "consumes"
+    },
+    {
+      "source": "func-ev-003",
+      "target": "sig-ev-soc",
+      "type": "consumes"
+    },
+    {
+      "source": "func-ev-003",
+      "target": "sig-ev-cooling-cmd",
+      "type": "produces"
+    },
+    {
+      "source": "func-ev-004",
+      "target": "sig-ev-soc",
+      "type": "consumes"
+    },
+    {
+      "source": "func-ev-004",
+      "target": "sig-ev-contactor",
+      "type": "produces"
+    },
+    {
+      "source": "func-uav-001",
+      "target": "sig-uav-gps-pos",
+      "type": "consumes"
+    },
+    {
+      "source": "func-uav-001",
+      "target": "sig-uav-waypoints",
+      "type": "consumes"
+    },
+    {
+      "source": "func-uav-002",
+      "target": "sig-uav-camera-frame",
+      "type": "consumes"
+    },
+    {
+      "source": "func-uav-002",
+      "target": "sig-uav-detections",
+      "type": "produces"
+    },
+    {
+      "source": "func-uav-003",
+      "target": "sig-uav-gps-pos",
+      "type": "consumes"
+    },
+    {
+      "source": "func-uav-003",
+      "target": "sig-uav-terrain-hgt",
+      "type": "consumes"
+    },
+    {
+      "source": "func-uav-003",
+      "target": "sig-uav-altitude-cmd",
+      "type": "produces"
+    },
+    {
+      "source": "func-med-001",
+      "target": "sig-med-flow-cmd",
+      "type": "consumes"
+    },
+    {
+      "source": "func-med-001",
+      "target": "sig-med-upstream-p",
+      "type": "consumes"
+    },
+    {
+      "source": "func-med-001",
+      "target": "sig-med-motor-speed",
+      "type": "produces"
+    },
+    {
+      "source": "func-med-002",
+      "target": "sig-med-air-detect",
+      "type": "produces"
+    },
+    {
+      "source": "func-med-003",
+      "target": "sig-med-drug-params",
+      "type": "consumes"
+    },
+    {
+      "source": "func-med-003",
+      "target": "sig-med-verify-ok",
+      "type": "produces"
+    },
+    {
+      "source": "func-fac-001",
+      "target": "sig-fac-target-pos",
+      "type": "consumes"
+    },
+    {
+      "source": "func-fac-001",
+      "target": "sig-fac-fleet-state",
+      "type": "consumes"
+    },
+    {
+      "source": "func-fac-001",
+      "target": "sig-fac-path-plan",
+      "type": "produces"
+    },
+    {
+      "source": "func-fac-002",
+      "target": "sig-fac-lidar-scan",
+      "type": "consumes"
+    },
+    {
+      "source": "func-fac-002",
+      "target": "sig-fac-obstacle-map",
+      "type": "produces"
+    },
+    {
+      "source": "func-fac-003",
+      "target": "sig-fac-path-plan",
+      "type": "consumes"
+    },
+    {
+      "source": "func-fac-003",
+      "target": "sig-fac-fork-cmd",
+      "type": "consumes"
+    },
+    {
+      "source": "func-fac-003",
+      "target": "sig-fac-fork-status",
+      "type": "produces"
+    }
   ]
 }
