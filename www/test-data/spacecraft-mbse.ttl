@@ -1,0 +1,535 @@
+@prefix :      <http://vectormbe.io/demo/spacecraft#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix sysml: <http://vectormbe.io/sysml#> .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  VectorMBE Demo — Spacecraft System MBSE Ontology
+#  Instances (owl:NamedIndividual) with rich attributes and cross-domain links.
+#  Designed for ontology graph construction and traceability demos.
+# ═══════════════════════════════════════════════════════════════════════════════
+
+<http://vectormbe.io/demo/spacecraft> a owl:Ontology ;
+    rdfs:label "Spacecraft System — VectorMBE MBSE Demo" ;
+    owl:versionInfo "2.0" .
+
+# ─── Schema: Kind taxonomy ────────────────────────────────────────────────────
+
+:System         a owl:Class ; rdfs:label "System" .
+:Subsystem      a owl:Class ; rdfs:label "Subsystem" ; rdfs:subClassOf :System .
+:Component      a owl:Class ; rdfs:label "Component" ; rdfs:subClassOf :Subsystem .
+:Requirement    a owl:Class ; rdfs:label "Requirement" .
+:Function       a owl:Class ; rdfs:label "Function" .
+:Interface      a owl:Class ; rdfs:label "Interface" .
+:Material       a owl:Class ; rdfs:label "Material" .
+:DesignParam    a owl:Class ; rdfs:label "DesignParam" .
+:VerificationCase a owl:Class ; rdfs:label "VerificationCase" .
+:Hazard         a owl:Class ; rdfs:label "Hazard" .
+
+# ─── Schema: Object properties ────────────────────────────────────────────────
+
+:hasPart         a owl:ObjectProperty ; rdfs:label "has part" .
+:allocatedTo     a owl:ObjectProperty ; rdfs:label "allocated to" .
+:satisfies       a owl:ObjectProperty ; rdfs:label "satisfies" .
+:interfaces      a owl:ObjectProperty ; rdfs:label "interfaces with" .
+:verifies        a owl:ObjectProperty ; rdfs:label "verifies" .
+:derives         a owl:ObjectProperty ; rdfs:label "derives" .
+:mitigates       a owl:ObjectProperty ; rdfs:label "mitigates" .
+:realizesFunction a owl:ObjectProperty ; rdfs:label "realizes function" .
+
+# ─── Schema: Datatype properties ─────────────────────────────────────────────
+
+:mass_kg         a owl:DatatypeProperty ; rdfs:label "mass (kg)" ; rdfs:range xsd:decimal .
+:power_W         a owl:DatatypeProperty ; rdfs:label "power (W)" ; rdfs:range xsd:decimal .
+:dataRate_kbps   a owl:DatatypeProperty ; rdfs:label "data rate (kbps)" ; rdfs:range xsd:decimal .
+:reliability     a owl:DatatypeProperty ; rdfs:label "reliability" ; rdfs:range xsd:decimal .
+:tier            a owl:DatatypeProperty ; rdfs:label "tier" ; rdfs:range xsd:integer .
+:priority        a owl:DatatypeProperty ; rdfs:label "priority" ; rdfs:range xsd:string .
+:status          a owl:DatatypeProperty ; rdfs:label "status" ; rdfs:range xsd:string .
+:description     a owl:DatatypeProperty ; rdfs:label "description" ; rdfs:range xsd:string .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  TIER 1 — Top-level system
+# ═══════════════════════════════════════════════════════════════════════════════
+
+:LEO_Spacecraft a owl:NamedIndividual, :System ;
+    rdfs:label "LEO Earth-Observation Spacecraft" ;
+    :mass_kg "487.0"^^xsd:decimal ;
+    :power_W "1200.0"^^xsd:decimal ;
+    :dataRate_kbps "200000.0"^^xsd:decimal ;
+    :reliability "0.9997"^^xsd:decimal ;
+    :tier "1"^^xsd:integer ;
+    :status "PDR-Complete" ;
+    :description "Low-Earth orbit synthetic aperture radar platform, sun-synchronous 520 km" ;
+    :hasPart :GNC_Subsystem, :ADCS_Subsystem, :Power_Subsystem,
+             :Structure_Subsystem, :Comms_Subsystem, :Thermal_Subsystem,
+             :Payload_Subsystem, :CDH_Subsystem .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  TIER 2 — Subsystems
+# ═══════════════════════════════════════════════════════════════════════════════
+
+:GNC_Subsystem a owl:NamedIndividual, :Subsystem ;
+    rdfs:label "Guidance Navigation & Control" ;
+    :mass_kg "22.4"^^xsd:decimal ;
+    :power_W "65.0"^^xsd:decimal ;
+    :tier "2"^^xsd:integer ;
+    :status "CDR-Complete" ;
+    :hasPart :StarTracker, :IMU, :GPSReceiver, :RWA_Assembly, :MagTorquer ;
+    :realizesFunction :FN_AttitudeControl, :FN_OrbitDetermination, :FN_Maneuver .
+
+:ADCS_Subsystem a owl:NamedIndividual, :Subsystem ;
+    rdfs:label "Attitude Determination & Control" ;
+    :mass_kg "18.7"^^xsd:decimal ;
+    :power_W "55.0"^^xsd:decimal ;
+    :tier "2"^^xsd:integer ;
+    :status "CDR-Complete" ;
+    :interfaces :GNC_Subsystem .
+
+:Power_Subsystem a owl:NamedIndividual, :Subsystem ;
+    rdfs:label "Electrical Power Subsystem" ;
+    :mass_kg "68.3"^^xsd:decimal ;
+    :power_W "-1200.0"^^xsd:decimal ;
+    :tier "2"^^xsd:integer ;
+    :status "PDR-Complete" ;
+    :hasPart :SolarArray_Port, :SolarArray_Starboard, :BatteryPack, :PCDU ;
+    :realizesFunction :FN_PowerGeneration, :FN_PowerStorage, :FN_PowerDistribution .
+
+:Structure_Subsystem a owl:NamedIndividual, :Subsystem ;
+    rdfs:label "Primary Structure" ;
+    :mass_kg "112.5"^^xsd:decimal ;
+    :power_W "0.0"^^xsd:decimal ;
+    :tier "2"^^xsd:integer ;
+    :status "CDR-Complete" ;
+    :hasPart :CentralTube, :SidePanelNorth, :SidePanelSouth, :DeckTop, :DeckBottom .
+
+:Comms_Subsystem a owl:NamedIndividual, :Subsystem ;
+    rdfs:label "Communications Subsystem" ;
+    :mass_kg "15.2"^^xsd:decimal ;
+    :power_W "85.0"^^xsd:decimal ;
+    :dataRate_kbps "200000.0"^^xsd:decimal ;
+    :tier "2"^^xsd:integer ;
+    :status "PDR-Complete" ;
+    :hasPart :XBandTxRx, :SBandTxRx, :LGAntenna, :MGAntenna, :HGAntenna ;
+    :realizesFunction :FN_TelemetryDownlink, :FN_CommandUplink, :FN_PayloadDownlink .
+
+:Thermal_Subsystem a owl:NamedIndividual, :Subsystem ;
+    rdfs:label "Thermal Control Subsystem" ;
+    :mass_kg "9.8"^^xsd:decimal ;
+    :power_W "28.0"^^xsd:decimal ;
+    :tier "2"^^xsd:integer ;
+    :status "PDR-Complete" ;
+    :hasPart :HeatPipe_Network, :MLI_Blankets, :Heaters, :Radiator .
+
+:Payload_Subsystem a owl:NamedIndividual, :Subsystem ;
+    rdfs:label "SAR Payload" ;
+    :mass_kg "198.0"^^xsd:decimal ;
+    :power_W "800.0"^^xsd:decimal ;
+    :dataRate_kbps "1000000.0"^^xsd:decimal ;
+    :tier "2"^^xsd:integer ;
+    :status "PDR-Complete" ;
+    :hasPart :SARAntenna, :SignalProcessor, :DataStorage ;
+    :realizesFunction :FN_EarthImaging, :FN_SARDataProcessing .
+
+:CDH_Subsystem a owl:NamedIndividual, :Subsystem ;
+    rdfs:label "Command & Data Handling" ;
+    :mass_kg "6.1"^^xsd:decimal ;
+    :power_W "18.0"^^xsd:decimal ;
+    :dataRate_kbps "50000.0"^^xsd:decimal ;
+    :tier "2"^^xsd:integer ;
+    :status "CDR-Complete" ;
+    :hasPart :OBC_Primary, :OBC_Redundant, :MassMemory ;
+    :realizesFunction :FN_OnboardComputing, :FN_DataManagement .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  TIER 3 — Components
+# ═══════════════════════════════════════════════════════════════════════════════
+
+:StarTracker a owl:NamedIndividual, :Component ;
+    rdfs:label "Star Tracker (Primary)" ;
+    :mass_kg "0.78"^^xsd:decimal ;
+    :power_W "3.5"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :reliability "0.9999"^^xsd:decimal ;
+    :status "Qualified" .
+
+:IMU a owl:NamedIndividual, :Component ;
+    rdfs:label "Inertial Measurement Unit" ;
+    :mass_kg "0.62"^^xsd:decimal ;
+    :power_W "4.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :reliability "0.9998"^^xsd:decimal ;
+    :status "Qualified" .
+
+:GPSReceiver a owl:NamedIndividual, :Component ;
+    rdfs:label "GPS / GNSS Receiver" ;
+    :mass_kg "0.25"^^xsd:decimal ;
+    :power_W "2.8"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:RWA_Assembly a owl:NamedIndividual, :Component ;
+    rdfs:label "Reaction Wheel Assembly (4-wheel pyramid)" ;
+    :mass_kg "5.2"^^xsd:decimal ;
+    :power_W "22.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:MagTorquer a owl:NamedIndividual, :Component ;
+    rdfs:label "Magnetorquer Rods (3-axis)" ;
+    :mass_kg "0.95"^^xsd:decimal ;
+    :power_W "4.5"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:SolarArray_Port a owl:NamedIndividual, :Component ;
+    rdfs:label "Solar Array — Port Wing" ;
+    :mass_kg "12.4"^^xsd:decimal ;
+    :power_W "600.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:SolarArray_Starboard a owl:NamedIndividual, :Component ;
+    rdfs:label "Solar Array — Starboard Wing" ;
+    :mass_kg "12.4"^^xsd:decimal ;
+    :power_W "600.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:BatteryPack a owl:NamedIndividual, :Component ;
+    rdfs:label "Li-Ion Battery Pack" ;
+    :mass_kg "28.6"^^xsd:decimal ;
+    :power_W "0.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "PDR-Complete" .
+
+:PCDU a owl:NamedIndividual, :Component ;
+    rdfs:label "Power Control & Distribution Unit" ;
+    :mass_kg "4.8"^^xsd:decimal ;
+    :power_W "12.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:SARAntenna a owl:NamedIndividual, :Component ;
+    rdfs:label "SAR Phased-Array Antenna (5m × 1.2m)" ;
+    :mass_kg "95.0"^^xsd:decimal ;
+    :power_W "500.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "PDR-Complete" .
+
+:SignalProcessor a owl:NamedIndividual, :Component ;
+    rdfs:label "SAR Signal Processor (FPGA-based)" ;
+    :mass_kg "6.2"^^xsd:decimal ;
+    :power_W "180.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "PDR-Complete" .
+
+:DataStorage a owl:NamedIndividual, :Component ;
+    rdfs:label "Solid-State Mass Memory — 4 TB" ;
+    :mass_kg "2.1"^^xsd:decimal ;
+    :power_W "12.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:OBC_Primary a owl:NamedIndividual, :Component ;
+    rdfs:label "On-Board Computer (Primary)" ;
+    :mass_kg "1.4"^^xsd:decimal ;
+    :power_W "8.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :reliability "0.9999"^^xsd:decimal ;
+    :status "CDR-Complete" .
+
+:OBC_Redundant a owl:NamedIndividual, :Component ;
+    rdfs:label "On-Board Computer (Redundant)" ;
+    :mass_kg "1.4"^^xsd:decimal ;
+    :power_W "8.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:XBandTxRx a owl:NamedIndividual, :Component ;
+    rdfs:label "X-Band Transceiver (Payload downlink)" ;
+    :mass_kg "2.8"^^xsd:decimal ;
+    :power_W "55.0"^^xsd:decimal ;
+    :dataRate_kbps "200000.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:SBandTxRx a owl:NamedIndividual, :Component ;
+    rdfs:label "S-Band TT&C Transceiver" ;
+    :mass_kg "1.1"^^xsd:decimal ;
+    :power_W "12.0"^^xsd:decimal ;
+    :dataRate_kbps "256.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:CentralTube a owl:NamedIndividual, :Component ;
+    rdfs:label "Central Load-Bearing Tube (CFRP)" ;
+    :mass_kg "28.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+:HeatPipe_Network a owl:NamedIndividual, :Component ;
+    rdfs:label "Deployable Heat Pipe Network" ;
+    :mass_kg "4.2"^^xsd:decimal ;
+    :power_W "0.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "PDR-Complete" .
+
+:Radiator a owl:NamedIndividual, :Component ;
+    rdfs:label "Body-Mounted Radiator Panels" ;
+    :mass_kg "2.8"^^xsd:decimal ;
+    :power_W "0.0"^^xsd:decimal ;
+    :tier "3"^^xsd:integer ;
+    :status "CDR-Complete" .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Functions
+# ═══════════════════════════════════════════════════════════════════════════════
+
+:FN_AttitudeControl a owl:NamedIndividual, :Function ;
+    rdfs:label "Attitude Control" ;
+    :tier "2"^^xsd:integer ;
+    :description "Maintain spacecraft pointing within 0.1° 3σ of nadir" .
+
+:FN_OrbitDetermination a owl:NamedIndividual, :Function ;
+    rdfs:label "Orbit Determination" ;
+    :tier "2"^^xsd:integer ;
+    :description "Determine orbital state to within 10m position accuracy" .
+
+:FN_Maneuver a owl:NamedIndividual, :Function ;
+    rdfs:label "Orbit Maintenance Maneuver" ;
+    :tier "2"^^xsd:integer ;
+    :description "Execute station-keeping and de-orbit burn" .
+
+:FN_PowerGeneration a owl:NamedIndividual, :Function ;
+    rdfs:label "Solar Power Generation" ;
+    :tier "2"^^xsd:integer ;
+    :description "Generate ≥1200W average from solar arrays in sunlight" .
+
+:FN_PowerStorage a owl:NamedIndividual, :Function ;
+    rdfs:label "Eclipse Power Storage" ;
+    :tier "2"^^xsd:integer ;
+    :description "Supply ≥600W during eclipse from battery" .
+
+:FN_PowerDistribution a owl:NamedIndividual, :Function ;
+    rdfs:label "Power Distribution" ;
+    :tier "2"^^xsd:integer ;
+    :description "Distribute regulated 28V bus to all loads with fault isolation" .
+
+:FN_TelemetryDownlink a owl:NamedIndividual, :Function ;
+    rdfs:label "Telemetry Downlink" ;
+    :tier "2"^^xsd:integer ;
+    :description "Downlink housekeeping TM at 256 kbps on S-band" .
+
+:FN_CommandUplink a owl:NamedIndividual, :Function ;
+    rdfs:label "Command Uplink" ;
+    :tier "2"^^xsd:integer ;
+    :description "Receive and authenticate ground commands" .
+
+:FN_PayloadDownlink a owl:NamedIndividual, :Function ;
+    rdfs:label "Payload Data Downlink" ;
+    :tier "2"^^xsd:integer ;
+    :description "Downlink SAR imagery at 200 Mbps on X-band" .
+
+:FN_EarthImaging a owl:NamedIndividual, :Function ;
+    rdfs:label "SAR Earth Imaging" ;
+    :tier "2"^^xsd:integer ;
+    :description "Collect SAR imagery at 1m resolution, 30km swath" .
+
+:FN_SARDataProcessing a owl:NamedIndividual, :Function ;
+    rdfs:label "SAR Data Processing" ;
+    :tier "2"^^xsd:integer ;
+    :description "Onboard SAR focusing and compression to L1 product" .
+
+:FN_OnboardComputing a owl:NamedIndividual, :Function ;
+    rdfs:label "Onboard Computing" ;
+    :tier "2"^^xsd:integer ;
+    :description "Execute AOCS, thermal, and payload scheduling algorithms" .
+
+:FN_DataManagement a owl:NamedIndividual, :Function ;
+    rdfs:label "Data Management" ;
+    :tier "2"^^xsd:integer ;
+    :description "Store, retrieve, and prioritize downlink queue" .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Requirements (Level A / Mission-critical)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+:REQ_001 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-001: Mission Lifetime" ;
+    :description "The spacecraft shall operate for a minimum of 7 years in LEO without refueling." ;
+    :priority "Shall" ;
+    :status "Approved" ;
+    :tier "1"^^xsd:integer .
+
+:REQ_002 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-002: Image Resolution" ;
+    :description "The SAR payload shall achieve ≤1m ground range resolution in stripmap mode." ;
+    :priority "Shall" ;
+    :status "Approved" ;
+    :tier "1"^^xsd:integer ;
+    :derives :REQ_010, :REQ_011 .
+
+:REQ_003 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-003: Pointing Accuracy" ;
+    :description "The ADCS shall maintain nadir pointing within 0.1° (3σ) during imaging." ;
+    :priority "Shall" ;
+    :status "Approved" ;
+    :tier "1"^^xsd:integer .
+
+:REQ_004 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-004: Downlink Capacity" ;
+    :description "The comms subsystem shall support ≥200 Mbps X-band downlink per pass." ;
+    :priority "Shall" ;
+    :status "Approved" ;
+    :tier "1"^^xsd:integer .
+
+:REQ_005 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-005: Power Budget" ;
+    :description "The EPS shall provide ≥1200W orbit-average power with 30% margin." ;
+    :priority "Shall" ;
+    :status "Approved" ;
+    :tier "1"^^xsd:integer .
+
+:REQ_006 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-006: Launch Mass" ;
+    :description "The total wet mass shall not exceed 500 kg including 10% margin." ;
+    :priority "Shall" ;
+    :status "Approved" ;
+    :tier "1"^^xsd:integer .
+
+:REQ_007 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-007: Single Fault Tolerance" ;
+    :description "All mission-critical functions shall tolerate a single point failure." ;
+    :priority "Shall" ;
+    :status "Approved" ;
+    :tier "1"^^xsd:integer .
+
+:REQ_008 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-008: Radiation Tolerance" ;
+    :description "All electronics shall survive ≥30 krad TID over mission lifetime." ;
+    :priority "Shall" ;
+    :status "Approved" ;
+    :tier "1"^^xsd:integer .
+
+:REQ_009 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-009: Thermal Range" ;
+    :description "Platform shall operate between -20°C and +60°C component temperatures." ;
+    :priority "Shall" ;
+    :status "Approved" ;
+    :tier "2"^^xsd:integer .
+
+:REQ_010 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-010: Antenna Size" ;
+    :description "SAR antenna aperture shall be ≥5m in azimuth to achieve REQ-002." ;
+    :priority "Shall" ;
+    :status "Derived" ;
+    :tier "2"^^xsd:integer .
+
+:REQ_011 a owl:NamedIndividual, :Requirement ;
+    rdfs:label "REQ-011: Pulse Bandwidth" ;
+    :description "Transmitted pulse bandwidth shall be ≥300 MHz to achieve 1m range resolution." ;
+    :priority "Shall" ;
+    :status "Derived" ;
+    :tier "2"^^xsd:integer .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Hazards
+# ═══════════════════════════════════════════════════════════════════════════════
+
+:HAZ_001 a owl:NamedIndividual, :Hazard ;
+    rdfs:label "HAZ-001: Battery Over-discharge" ;
+    :description "Battery deep discharge leading to cell reversal and permanent capacity loss" ;
+    :tier "2"^^xsd:integer ;
+    :status "Mitigated" ;
+    :mitigates :REQ_005 .
+
+:HAZ_002 a owl:NamedIndividual, :Hazard ;
+    rdfs:label "HAZ-002: Solar Array Single-String Failure" ;
+    :description "Loss of one solar array wing reduces power by 50%" ;
+    :tier "2"^^xsd:integer ;
+    :status "Mitigated" ;
+    :mitigates :REQ_007 .
+
+:HAZ_003 a owl:NamedIndividual, :Hazard ;
+    rdfs:label "HAZ-003: OBC Latch-Up" ;
+    :description "SEU-induced latch-up in OBC processor causing autonomous function loss" ;
+    :tier "2"^^xsd:integer ;
+    :status "Mitigated" ;
+    :mitigates :REQ_008 .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Materials
+# ═══════════════════════════════════════════════════════════════════════════════
+
+:MAT_CFRP a owl:NamedIndividual, :Material ;
+    rdfs:label "CFRP T700 / M21" ;
+    :description "Carbon fibre reinforced polymer for primary structure" ;
+    :tier "3"^^xsd:integer .
+
+:MAT_Ti6Al4V a owl:NamedIndividual, :Material ;
+    rdfs:label "Ti-6Al-4V (Grade 5 Titanium)" ;
+    :description "Titanium alloy for brackets and load interface fittings" ;
+    :tier "3"^^xsd:integer .
+
+:MAT_InvarMLI a owl:NamedIndividual, :Material ;
+    rdfs:label "Aluminized Kapton MLI" ;
+    :description "Multi-layer insulation blankets for thermal control" ;
+    :tier "3"^^xsd:integer .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Verification cases
+# ═══════════════════════════════════════════════════════════════════════════════
+
+:VC_001 a owl:NamedIndividual, :VerificationCase ;
+    rdfs:label "VC-001: Attitude Control Simulation" ;
+    :description "HIL simulation of ADCS loop with representative disturbances" ;
+    :tier "2"^^xsd:integer ;
+    :status "Planned" ;
+    :verifies :REQ_003 .
+
+:VC_002 a owl:NamedIndividual, :VerificationCase ;
+    rdfs:label "VC-002: SAR Resolution Measurement" ;
+    :description "Corner reflector calibration ground test at RF range" ;
+    :tier "2"^^xsd:integer ;
+    :status "Planned" ;
+    :verifies :REQ_002 .
+
+:VC_003 a owl:NamedIndividual, :VerificationCase ;
+    rdfs:label "VC-003: Power Balance Analysis" ;
+    :description "Worst-case eclipse power budget analysis at EOM" ;
+    :tier "2"^^xsd:integer ;
+    :status "Complete" ;
+    :verifies :REQ_005 .
+
+:VC_004 a owl:NamedIndividual, :VerificationCase ;
+    rdfs:label "VC-004: Mass Budget Verification" ;
+    :description "Formal mass budget rollup at CDR with hardware actuals" ;
+    :tier "1"^^xsd:integer ;
+    :status "Complete" ;
+    :verifies :REQ_006 .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Satisfy / allocate cross-links
+# ═══════════════════════════════════════════════════════════════════════════════
+
+:GNC_Subsystem     :satisfies :REQ_003 .
+:Power_Subsystem   :satisfies :REQ_005 .
+:Comms_Subsystem   :satisfies :REQ_004 .
+:Payload_Subsystem :satisfies :REQ_002 .
+:LEO_Spacecraft    :satisfies :REQ_001, :REQ_006 .
+
+:FN_AttitudeControl   :allocatedTo :GNC_Subsystem .
+:FN_PowerGeneration   :allocatedTo :Power_Subsystem .
+:FN_EarthImaging      :allocatedTo :Payload_Subsystem .
+:FN_TelemetryDownlink :allocatedTo :Comms_Subsystem .
+:FN_OnboardComputing  :allocatedTo :CDH_Subsystem .
+
+:CentralTube :interfaces :SolarArray_Port, :SolarArray_Starboard, :SARAntenna .
+:OBC_Primary :interfaces :OBC_Redundant .
+:XBandTxRx   :interfaces :HGAntenna .
+:SBandTxRx   :interfaces :LGAntenna .
+
+:CentralTube  rdfs:comment "Uses MAT_CFRP" .
