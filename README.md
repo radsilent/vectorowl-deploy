@@ -1,6 +1,6 @@
-# VectorOWL Deploy
+# VectorMBE Deploy
 
-Docker-only deployment for [VectorOWL](https://vectorstreamsystems.com/) — no source code required.
+Docker-only deployment for [VectorMBE](https://vectorstreamsystems.com/) — no source code required.
 
 ---
 
@@ -9,7 +9,7 @@ Docker-only deployment for [VectorOWL](https://vectorstreamsystems.com/) — no 
 - **macOS** — [Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/) (Apple Silicon or Intel)
 - **Windows** — [Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/) (WSL2 backend recommended) or Windows Subsystem for Linux (WSL2) with Docker Engine
 - **Linux** — [Docker Engine](https://docs.docker.com/engine/install/) + [Docker Compose](https://docs.docker.com/compose/install/) (plugin or standalone)
-- A valid VectorOWL license key ([request one](mailto:streamline@vectorstreamsystems.com))
+- A valid VectorMBE license key ([request one](mailto:streamline@vectorstreamsystems.com))
 
 ---
 
@@ -17,12 +17,12 @@ Docker-only deployment for [VectorOWL](https://vectorstreamsystems.com/) — no 
 
 ```bash
 # 1. Download the deploy package (no source code)
-curl -L https://github.com/radsilent/vectorowl-deploy/archive/main.tar.gz | tar xz
-mv vectorowl-deploy-main vectorowl && cd vectorowl
+curl -L https://github.com/radsilent/vectormbe-deploy/archive/main.tar.gz | tar xz
+mv vectormbe-deploy-main vectormbe && cd vectormbe
 
 # 2. Configure your license key
 cp .env.example .env
-# Edit .env and set VECTOROWL_LICENSE_KEY
+# Edit .env and set VECTORMBE_LICENSE_KEY
 
 # 3. Start
 docker compose up -d
@@ -40,14 +40,14 @@ Open **PowerShell** and run:
 
 ```powershell
 # 1. Download the deploy package
-Invoke-WebRequest -Uri https://github.com/radsilent/vectorowl-deploy/archive/main.tar.gz -OutFile vectorowl-deploy.tar.gz
-tar -xzf vectorowl-deploy.tar.gz
-Rename-Item vectorowl-deploy-main vectorowl
-Set-Location vectorowl
+Invoke-WebRequest -Uri https://github.com/radsilent/vectormbe-deploy/archive/main.tar.gz -OutFile vectormbe-deploy.tar.gz
+tar -xzf vectormbe-deploy.tar.gz
+Rename-Item vectormbe-deploy-main vectormbe
+Set-Location vectormbe
 
 # 2. Configure your license key
 Copy-Item .env.example .env
-# Edit .env and set VECTOROWL_LICENSE_KEY
+# Edit .env and set VECTORMBE_LICENSE_KEY
 
 # 3. Start
 docker compose up -d
@@ -59,12 +59,12 @@ Inside your WSL2 distro:
 
 ```bash
 # 1. Download the deploy package
-curl -L https://github.com/radsilent/vectorowl-deploy/archive/main.tar.gz | tar xz
-mv vectorowl-deploy-main vectorowl && cd vectorowl
+curl -L https://github.com/radsilent/vectormbe-deploy/archive/main.tar.gz | tar xz
+mv vectormbe-deploy-main vectormbe && cd vectormbe
 
 # 2. Configure your license key
 cp .env.example .env
-# Edit .env and set VECTOROWL_LICENSE_KEY
+# Edit .env and set VECTORMBE_LICENSE_KEY
 
 # 3. Start
 docker compose up -d
@@ -78,12 +78,12 @@ Access the UI at **http://localhost:8080** from Windows — Docker Desktop forwa
 
 ```bash
 # 1. Download the deploy package (contains only Docker configs, no source code)
-curl -L https://github.com/radsilent/vectorowl-deploy/archive/main.tar.gz | tar xz
-mv vectorowl-deploy-main vectorowl && cd vectorowl
+curl -L https://github.com/radsilent/vectormbe-deploy/archive/main.tar.gz | tar xz
+mv vectormbe-deploy-main vectormbe && cd vectormbe
 
 # 2. Configure your license key
 cp .env.example .env
-# Edit .env and set VECTOROWL_LICENSE_KEY
+# Edit .env and set VECTORMBE_LICENSE_KEY
 
 # 3. Start
 docker-compose up -d
@@ -97,7 +97,7 @@ Open **http://localhost:8080**.
 
 ## What's included
 
-- `docker-compose.yml` — pulls `radsilent/vectorowl:latest` from Docker Hub
+- `docker-compose.yml` — pulls `radsilent/vectormbe:latest` from Docker Hub
 - `Caddyfile` — reverse proxy for API + static UI
 - `.env.example` — license key, LLM config, and optional feature flags
 
@@ -117,8 +117,8 @@ docker-compose up -d
 ## Logs
 
 ```bash
-docker logs -f vectorowl
-docker logs -f vectorowl-caddy
+docker logs -f vectormbe
+docker logs -f vectormbe-caddy
 ```
 
 ---
@@ -127,15 +127,15 @@ docker logs -f vectorowl-caddy
 
 | Variable | Default | Description |
 |---|---|---|
-| `VECTOROWL_LICENSE_KEY` | *(required)* | License activation key |
-| `VECTOROWL_PORT` | `8080` | HTTP port |
-| `VECTOROWL_HOST` | `0.0.0.0` | Bind address |
-| `VECTOROWL_REQUIRE_TORCH_GPU` | `false` | Set `true` for GPU-accelerated hosts |
-| `VECTOROWL_STARTUP_GRAPH` | `demo` | Preload `demo` graph on startup (set empty to start blank) |
-| `VECTOROWL_ISOLATE_BY_SESSION` | `false` | Multi-tenant isolation — each API key gets its own isolated workspace |
-| `VECTOROWL_QDRANT_URL` | *(unset)* | Qdrant endpoint (e.g. `http://qdrant:6333`) for persistent vector storage |
-| `VECTOROWL_LLM_PROVIDER` | *(unset)* | `openai`, `anthropic`, or `ollama` for AI synthesis |
-| `VECTOROWL_LLM_API_KEY` | *(unset)* | API key for the LLM provider |
+| `VECTORMBE_LICENSE_KEY` | *(required)* | License activation key |
+| `VECTORMBE_PORT` | `8080` | HTTP port |
+| `VECTORMBE_HOST` | `0.0.0.0` | Bind address |
+| `VECTORMBE_REQUIRE_TORCH_GPU` | `false` | Set `true` for GPU-accelerated hosts |
+| `VECTORMBE_STARTUP_GRAPH` | `demo` | Preload `demo` graph on startup (set empty to start blank) |
+| `VECTORMBE_ISOLATE_BY_SESSION` | `false` | Multi-tenant isolation — each API key gets its own isolated workspace |
+| `VECTORMBE_QDRANT_URL` | *(unset)* | Qdrant endpoint (e.g. `http://qdrant:6333`) for persistent vector storage |
+| `VECTORMBE_LLM_PROVIDER` | *(unset)* | `openai`, `anthropic`, or `ollama` for AI synthesis |
+| `VECTORMBE_LLM_API_KEY` | *(unset)* | API key for the LLM provider |
 | `OPENAI_API_KEY` | *(unset)* | OpenAI key (shorthand when provider is `openai`) |
 | `ANTHROPIC_API_KEY` | *(unset)* | Anthropic key (shorthand when provider is `anthropic`) |
 
@@ -146,9 +146,9 @@ docker logs -f vectorowl-caddy
 When running a shared instance where multiple users connect with different API keys, enable workspace isolation:
 
 ```env
-VECTOROWL_ISOLATE_BY_SESSION=true
-VECTOROWL_ADMIN_KEY=your-admin-key
-VECTOROWL_EDITOR_KEY=user-a-key
+VECTORMBE_ISOLATE_BY_SESSION=true
+VECTORMBE_ADMIN_KEY=your-admin-key
+VECTORMBE_EDITOR_KEY=user-a-key
 ```
 
 Each distinct API key gets a fully isolated graph workspace — entities, relations, and vector searches are scoped per key. Users cannot see each other's uploaded models.
@@ -164,10 +164,10 @@ For large-scale deployments (50k+ entities), add Qdrant for production-grade ANN
 3. Add to your `.env`:
 
 ```env
-VECTOROWL_QDRANT_URL=http://qdrant:6333
+VECTORMBE_QDRANT_URL=http://qdrant:6333
 ```
 
-VectorOWL automatically creates per-kind collections (`vectorowl_requirement`, etc.) and a cross-kind `vectorowl_entities_all` collection on first use. Without Qdrant, the in-process HNSW index handles vector search (suitable for most deployments).
+VectorMBE automatically creates per-kind collections (`vectormbe_requirement`, etc.) and a cross-kind `vectormbe_entities_all` collection on first use. Without Qdrant, the in-process HNSW index handles vector search (suitable for most deployments).
 
 ---
 
@@ -195,7 +195,7 @@ sudo apt-get install docker-compose-plugin   # Debian/Ubuntu
 
 Requires the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html).
 
-Add to `docker-compose.yml` under the `vectorowl` service:
+Add to `docker-compose.yml` under the `vectormbe` service:
 
 ```yaml
     deploy:
@@ -207,4 +207,4 @@ Add to `docker-compose.yml` under the `vectorowl` service:
               capabilities: [gpu]
 ```
 
-And set `VECTOROWL_REQUIRE_TORCH_GPU=true` in your `.env`.
+And set `VECTORMBE_REQUIRE_TORCH_GPU=true` in your `.env`.
