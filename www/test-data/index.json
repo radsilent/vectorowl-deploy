@@ -1,6 +1,6 @@
 {
-  "generated": "2026-06-01T04:18:18.095Z",
-  "count": 60,
+  "generated": "2026-06-08T00:00:00.000Z",
+  "count": 61,
   "files": [
     {
       "filename": "scenarios.json",
@@ -218,6 +218,13 @@
       "category": "Cameo / MDZIP",
       "format": "MDZIP",
       "description": "NIST SysML case study for electronics manufacturing assembly — resource allocation, process flow, and production logistics."
+    },
+    {
+      "filename": "commercial-transport-aircraft.sysml",
+      "label": "Boeing 777X — Full System Architecture (SysML v2)",
+      "category": "SysML v2",
+      "format": "SysML v2",
+      "description": "Top-down full functional decomposition of the Boeing 777-9X wide-body twin-engine transport: 9 Level-1 functions (including FoldingWingTip), 31 Level-2 functions, 12 physical subsystems (GE9X engines with CMC hot section, CFRP composite wing, FBW 777X FCS, avionics, 6-wheel bogie landing gear, ECS, hydraulics, VFG electrical, fuel, comms, cabin, AHM), 35 system requirements, and full allocation and verification constraints. CS-25/FAR-25, ARP 4754A, DO-178C, ETOPS 330, SAF-capable basis."
     },
     {
       "filename": "aircraft-propulsion-sysml2.sysml",
